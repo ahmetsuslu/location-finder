@@ -76,9 +76,9 @@ class GeocodingService
 
         foreach ($response as $item) {
             $formatted = [
-                'display_name' => $item[$format['address']] ?? '',
-                'lat' => (float) ($item[$format['lat']] ?? 0),
-                'lon' => (float) ($item[$format['lng']] ?? 0),
+                'display_name' => $item[$format['address']] ?? $item['display_name'] ?? '',
+                'lat' => (float) ($item[$format['lat']] ?? $item['lat'] ?? 0),
+                'lon' => (float) ($item[$format['lng']] ?? $item['lon'] ?? 0),
                 'class' => $item['class'] ?? null,
                 'type' => $item['type'] ?? null,
             ];
