@@ -1,7 +1,7 @@
 {
     "name": "sslah/location-finder",
-    "description": "Laravel location-finder package",
-    "keywords": ["laravel", "location-finder", "package"],
+    "description": "🚀 Laravel Location Finder with Autocomplete - OpenStreetMap/Nominatim powered address search with Alpine.js. Perfect for Turkish addresses!",
+    "keywords": ["laravel", "location-finder", "geocoding", "autocomplete", "openstreetmap", "nominatim", "alpine.js", "address-search", "turkey"],
     "license": "MIT",
     "type": "library",
     "homepage": "https://github.com/ahmetsuslu/location-finder",
@@ -19,26 +19,27 @@
     ],
     "require": {
         "php": "^8.1",
-        "laravel/framework": "^10.0^^|^11.0^^|^12.0"
+        "laravel/framework": "^10.0|^11.0|^12.0",
+        "guzzlehttp/guzzle": "^7.0"
     },
     "require-dev": {
         "phpunit/phpunit": "^10.0",
-        "orchestra/testbench": "^8.0^^|^9.0"
+        "orchestra/testbench": "^8.0|^9.0"
     },
     "autoload": {
         "psr-4": {
-            "Sslah\\location-finder\\": "src/"
+            "Sslah\\LocationFinder\\": "src/"
         }
     },
     "autoload-dev": {
         "psr-4": {
-            "Sslah\\location-finder\\Tests\\": "tests/"
+            "Sslah\\LocationFinder\\Tests\\": "tests/"
         }
     },
     "extra": {
         "laravel": {
             "providers": [
-                "Sslah\\location-finder\\location-finderServiceProvider"
+                "Sslah\\LocationFinder\\LocationFinderServiceProvider"
             ]
         }
     },
