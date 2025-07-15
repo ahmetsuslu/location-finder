@@ -40,7 +40,10 @@
         "laravel": {
             "providers": [
                 "Sslah\\LocationFinder\\LocationFinderServiceProvider"
-            ]
+            ],
+            "aliases": {
+                "LocationFinder": "Sslah\\LocationFinder\\Facades\\LocationFinder"
+            }
         }
     },
     "minimum-stability": "stable",

@@ -14,6 +14,40 @@ composer require sslah/location-finder
 php artisan location-finder:install
 ```
 
+## 🚀 Usage
+
+### 🎭 Using Facade (Recommended)
+```php
+use LocationFinder;
+
+// Search for locations
+$results = LocationFinder::search('ankara');
+
+// Geocode an address to get coordinates
+$location = LocationFinder::geocode('Kızılay, Ankara');
+
+// Reverse geocode coordinates to get address
+$address = LocationFinder::reverseGeocode(39.9208, 32.8541);
+```
+
+### 🔧 Using Dependency Injection
+```php
+use Sslah\LocationFinder\Services\GeocodingService;
+
+class LocationController
+{
+    public function __construct(private GeocodingService $locationFinder)
+    {
+    }
+
+    public function search(Request $request)
+    {
+        $results = $this->locationFinder->search($request->query);
+        return response()->json($results);
+    }
+}
+```
+
 ## 🎯 API Endpoints
 
 ### Search Address

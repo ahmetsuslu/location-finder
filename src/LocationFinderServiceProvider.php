@@ -14,9 +14,19 @@ class LocationFinderServiceProvider extends ServiceProvider
 {
     public function register(): void
     {
+        // Register the main service
         $this->app->singleton(GeocodingService::class, function ($app) {
             return new GeocodingService();
         });
+
+        // Bind for facade access
+        $this->app->bind('location-finder', function ($app) {
+            return $app->make(GeocodingService::class);
+        });
+
+        // Register facade alias
+        $loader = \Illuminate\Foundation\AliasLoader::getInstance();
+        $loader->alias('LocationFinder', \Sslah\LocationFinder\Facades\LocationFinder::class);
     }
 
     public function boot(): void
