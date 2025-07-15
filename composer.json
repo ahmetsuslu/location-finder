@@ -1,7 +1,7 @@
 {
     "name": "sslah/location-finder",
-    "description": "🚀 Laravel Location Finder with Autocomplete - OpenStreetMap/Nominatim powered address search with Alpine.js. Perfect for Turkish addresses!",
-    "keywords": ["laravel", "location-finder", "geocoding", "autocomplete", "openstreetmap", "nominatim", "alpine.js", "address-search", "turkey"],
+    "description": "🚀 Laravel Location Finder - Pure API Service for geocoding with OpenStreetMap/Nominatim. Framework-agnostic, no UI dependencies. Perfect for Turkish addresses!",
+    "keywords": ["laravel", "location-finder", "geocoding", "api-service", "openstreetmap", "nominatim", "address-search", "turkey", "framework-agnostic"],
     "license": "MIT",
     "type": "library",
     "homepage": "https://github.com/ahmetsuslu/location-finder",
