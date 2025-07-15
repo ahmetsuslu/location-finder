@@ -69,7 +69,7 @@ return [
         'format' => [
             'address' => 'display_name',
             'lat' => 'lat',
-            'lng' => 'lon',
+            'lon' => 'lon',
         ],
         'include_raw' => false, // Include raw Nominatim response
     ],

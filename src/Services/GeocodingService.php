@@ -78,7 +78,7 @@ class GeocodingService
             $formatted = [
                 'display_name' => $item[$format['address']] ?? $item['display_name'] ?? '',
                 'lat' => (float) ($item[$format['lat']] ?? $item['lat'] ?? 0),
-                'lon' => (float) ($item[$format['lng']] ?? $item['lon'] ?? 0),
+                'lon' => (float) ($item[$format['lon']] ?? $item['lon'] ?? 0),
                 'class' => $item['class'] ?? null,
                 'type' => $item['type'] ?? null,
             ];
@@ -104,9 +104,9 @@ class GeocodingService
         return $results[0] ?? null;
     }
 
-    public function reverseGeocode(float $lat, float $lng): ?array
+    public function reverseGeocode(float $lat, float $lon): ?array
     {
-        $cacheKey = $this->getCacheKey("reverse_{$lat}_{$lng}");
+        $cacheKey = $this->getCacheKey("reverse_{$lat}_{$lon}");
 
         if ($this->config['cache']['enabled']) {
             $cached = Cache::get($cacheKey);
@@ -122,7 +122,7 @@ class GeocodingService
                 ])
                 ->get($this->config['service']['base_url'] . '/reverse', [
                     'lat' => $lat,
-                    'lon' => $lng,
+                    'lon' => $lon,
                     'format' => 'json',
                     'accept-language' => $this->config['search']['language'],
                     'addressdetails' => 1,
