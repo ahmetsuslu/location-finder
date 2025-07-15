@@ -14,16 +14,17 @@ class InstallCommand extends Command
         $this->info('Installing Location Finder package...');
 
         $this->publishConfig();
-        $this->publishViews();
-        $this->publishAssets();
 
         $this->info('Location Finder package installed successfully!');
         $this->line('');
-        $this->line('You can now use <x-location-finder name="address" /> in your Blade templates.');
+        $this->line('This package provides API endpoints only:');
+        $this->line('- GET /api/location-finder/search?query={query}');
+        $this->line('- POST /api/location-finder/geocode');
+        $this->line('- POST /api/location-finder/reverse-geocode');
         $this->line('');
         $this->line('Configuration file: config/location-finder.php');
-        $this->line('View files: resources/views/vendor/location-finder/');
-        $this->line('Assets: public/vendor/location-finder/');
+        $this->line('');
+        $this->line('Please implement your own frontend UI.');
 
         return self::SUCCESS;
     }
@@ -36,19 +37,5 @@ class InstallCommand extends Command
         ]);
     }
 
-    protected function publishViews(): void
-    {
-        $this->call('vendor:publish', [
-            '--tag' => 'location-finder-views',
-            '--force' => true,
-        ]);
-    }
 
-    protected function publishAssets(): void
-    {
-        $this->call('vendor:publish', [
-            '--tag' => 'location-finder-assets',
-            '--force' => true,
-        ]);
-    }
 } 

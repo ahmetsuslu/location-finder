@@ -1,214 +1,27 @@
-# 🚀 Sslah/Location-Finder - Laravel Geocoding Autocomplete
+# 🚀 Laravel Location Finder - API Service
 
-> **The Ultimate Laravel Address Autocomplete!** OpenStreetMap/Nominatim powered geocoding with Alpine.js. Perfect for Turkish addresses, NO API keys required!
+**Pure API service for OpenStreetMap/Nominatim address search and geocoding.**
 
-[![Total Downloads](https://img.shields.io/packagist/dt/sslah/location-finder.svg)](https://packagist.org/packages/sslah/location-finder)
-[![Latest Version](https://img.shields.io/packagist/v/sslah/location-finder.svg)](https://packagist.org/packages/sslah/location-finder)
-[![License](https://img.shields.io/packagist/l/sslah/location-finder.svg)](https://packagist.org/packages/sslah/location-finder)
+> **Zero UI Dependencies** - Only provides backend API endpoints. Frontend implementation is up to you.
 
----
-
-## 🎯 Why This Package?
-
-### ✅ **NO API Keys Required**
-- **Google Maps API** costs money and requires API keys
-- **This package** uses free OpenStreetMap/Nominatim service
-- **Result**: Zero cost, no limits, no registration
-
-### ✅ **Perfect for Turkish Addresses**
-- **Most packages** are designed for US/European addresses
-- **This package** is optimized for Turkish geography
-- **Result**: Better search results for Turkish locations
-
-### ✅ **Modern Alpine.js Integration**
-- **jQuery-based** packages are outdated
-- **This package** uses Alpine.js (Laravel's default)
-- **Result**: Lightweight, modern, reactive UI
-
-### ✅ **Keyboard Navigation**
-- **↑↓ Arrow keys** to navigate results
-- **Enter** to select highlighted item
-- **Escape** to close dropdown
-- **Result**: Perfect user experience
-
----
-
-## 🏆 Feature Comparison
-
-| Feature | This Package | Google Maps | MapBox | Other Packages |
-|---------|-------------|-------------|--------|----------------|
-| **No API Key** | ✅ | ❌ | ❌ | ⚠️ |
-| **Turkish Focus** | ✅ | ⚠️ | ⚠️ | ❌ |
-| **Alpine.js** | ✅ | ❌ | ❌ | ❌ |
-| **Keyboard Nav** | ✅ | ⚠️ | ⚠️ | ❌ |
-| **Caching** | ✅ | ❌ | ❌ | ❌ |
-| **One-Line Install** | ✅ | ❌ | ❌ | ❌ |
-
----
-
-## 🚀 Lightning-Fast Installation
+## ✅ Installation
 
 ```bash
-# Install package (30 seconds)
 composer require sslah/location-finder
+```
 
-# Setup everything automatically
+```bash
 php artisan location-finder:install
 ```
 
-**That's it!** No API keys, no complex setup, no configuration needed.
+## 🎯 API Endpoints
 
----
-
-## 💎 Usage Examples
-
-### 🎯 **Basic Usage**
-
-```blade
-<x-location-finder name="address" placeholder="Adres arayın..." />
+### Search Address
+```http
+GET /api/location-finder/search?query=istanbul
 ```
 
-### 🎨 **Advanced Usage**
-
-```blade
-<x-location-finder 
-    name="location"
-    placeholder="Konum seçin..."
-    :min-chars="2"
-    :max-results="5"
-    :debounce-ms="500"
-    :required="true"
-    class="custom-input-class"
-    on-select="handleLocationSelect"
-    on-clear="handleLocationClear"
-    on-error="handleLocationError"
-/>
-```
-
-### 🔧 **JavaScript Callbacks**
-
-```javascript
-// Handle location selection
-function handleLocationSelect(result) {
-    console.log('Selected location:', result);
-    // result = { address: "...", lat: 41.0082, lng: 28.9784 }
-}
-
-// Handle input clear
-function handleLocationClear() {
-    console.log('Location cleared');
-}
-
-// Handle search errors
-function handleLocationError(error) {
-    console.error('Search error:', error);
-}
-```
-
-### 📝 **Form Integration**
-
-```blade
-<form method="POST" action="/save-location">
-    @csrf
-    
-    <div class="space-y-4">
-        <div>
-            <label class="block text-sm font-medium text-gray-700">
-                Adres
-            </label>
-            <x-location-finder 
-                name="address" 
-                placeholder="Adres arayın..."
-                :required="true"
-            />
-        </div>
-        
-        <button type="submit" class="px-4 py-2 bg-blue-500 text-white rounded">
-            Kaydet
-        </button>
-    </div>
-</form>
-```
-
-**Form data includes:**
-- `address` → Selected address string
-- `address_lat` → Latitude coordinate
-- `address_lng` → Longitude coordinate
-
----
-
-## 🔧 Configuration Options
-
-Configuration file at `config/location-finder.php`:
-
-```php
-return [
-    'service' => [
-        'provider' => 'nominatim',
-        'base_url' => 'https://nominatim.openstreetmap.org',
-        'timeout' => 10,
-        'rate_limit' => 1, // seconds between requests
-    ],
-    
-    'search' => [
-        'min_chars' => 3,
-        'max_results' => 10,
-        'country_code' => 'tr', // Turkey only
-        'language' => 'tr',
-        'debounce_ms' => 300,
-    ],
-    
-    'ui' => [
-        'placeholder' => 'Adres arayın...',
-        'no_results_text' => 'Sonuç bulunamadı',
-        'loading_text' => 'Aranıyor...',
-        'error_text' => 'Arama sırasında hata oluştu',
-        'keyboard_navigation' => true,
-    ],
-    
-    'cache' => [
-        'enabled' => true,
-        'ttl' => 3600, // 1 hour
-        'prefix' => 'location_finder_',
-    ],
-];
-```
-
----
-
-## 🎭 Component Options
-
-### Available Props
-
-```blade
-<x-location-finder 
-    name="address"              <!-- Input name (default: 'location') -->
-    placeholder="Adres..."      <!-- Placeholder text -->
-    value="Initial value"       <!-- Initial value -->
-    :min-chars="3"             <!-- Minimum characters to search -->
-    :max-results="10"          <!-- Maximum results to show -->
-    :debounce-ms="300"         <!-- Debounce delay in milliseconds -->
-    :required="false"          <!-- Required field -->
-    class="custom-class"       <!-- Additional CSS classes -->
-    on-select="callback"       <!-- JavaScript callback on selection -->
-    on-clear="callback"        <!-- JavaScript callback on clear -->
-    on-error="callback"        <!-- JavaScript callback on error -->
-/>
-```
-
----
-
-## 🌐 API Endpoints
-
-The package automatically registers these endpoints:
-
-```php
-GET  /api/location-finder/search?query=istanbul
-POST /api/location-finder/geocode
-POST /api/location-finder/reverse-geocode
-```
-
-### Search API Response
+**Response:**
 ```json
 {
     "success": true,
@@ -223,95 +36,291 @@ POST /api/location-finder/reverse-geocode
 }
 ```
 
----
+### Geocode Address
+```http
+POST /api/location-finder/geocode
+Content-Type: application/json
 
-## 🛠️ Advanced Usage
+{
+    "address": "İstanbul, Türkiye"
+}
+```
 
-### Programmatic Search
+### Reverse Geocode
+```http
+POST /api/location-finder/reverse-geocode
+Content-Type: application/json
+
+{
+    "lat": 41.0082,
+    "lng": 28.9784
+}
+```
+
+## 🔧 Configuration
+
+```php
+// config/location-finder.php
+return [
+    'service' => [
+        'provider' => 'nominatim',
+        'base_url' => 'https://nominatim.openstreetmap.org',
+        'user_agent' => 'Laravel Location Finder',
+        'timeout' => 10,
+    ],
+    'search' => [
+        'min_chars' => 3,
+        'max_results' => 10,
+        'country_code' => 'tr',
+        'language' => 'tr',
+    ],
+    'cache' => [
+        'enabled' => true,
+        'ttl' => 3600,
+    ],
+];
+```
+
+## 💡 Frontend Implementation Examples
+
+### Vanilla JavaScript
+```html
+<input type="text" id="address-search" placeholder="Search address...">
+<div id="results"></div>
+
+<script>
+document.getElementById('address-search').addEventListener('input', function(e) {
+    const query = e.target.value;
+    
+    if (query.length < 3) return;
+    
+    fetch(`/api/location-finder/search?query=${encodeURIComponent(query)}`)
+        .then(response => response.json())
+        .then(data => {
+            const resultsDiv = document.getElementById('results');
+            resultsDiv.innerHTML = '';
+            
+            data.results.forEach(result => {
+                const div = document.createElement('div');
+                div.innerHTML = `
+                    <strong>${result.address}</strong><br>
+                    <small>Lat: ${result.lat}, Lng: ${result.lng}</small>
+                `;
+                div.addEventListener('click', () => {
+                    console.log('Selected:', result);
+                });
+                resultsDiv.appendChild(div);
+            });
+        });
+});
+</script>
+```
+
+### jQuery
+```javascript
+$('#address-search').on('input', function() {
+    const query = $(this).val();
+    
+    if (query.length < 3) return;
+    
+    $.get('/api/location-finder/search', { query: query })
+        .done(function(data) {
+            const $results = $('#results').empty();
+            
+            data.results.forEach(function(result) {
+                $results.append(`
+                    <div class="result-item" data-lat="${result.lat}" data-lng="${result.lng}">
+                        <strong>${result.address}</strong><br>
+                        <small>Lat: ${result.lat}, Lng: ${result.lng}</small>
+                    </div>
+                `);
+            });
+        });
+});
+```
+
+### Vue.js
+```vue
+<template>
+    <div>
+        <input v-model="query" @input="search" placeholder="Search address...">
+        <div v-for="result in results" :key="result.address" @click="selectResult(result)">
+            <strong>{{ result.address }}</strong><br>
+            <small>Lat: {{ result.lat }}, Lng: {{ result.lng }}</small>
+        </div>
+    </div>
+</template>
+
+<script>
+export default {
+    data() {
+        return {
+            query: '',
+            results: []
+        }
+    },
+    methods: {
+        search() {
+            if (this.query.length < 3) return;
+            
+            fetch(`/api/location-finder/search?query=${encodeURIComponent(this.query)}`)
+                .then(response => response.json())
+                .then(data => {
+                    this.results = data.results;
+                });
+        },
+        selectResult(result) {
+            console.log('Selected:', result);
+        }
+    }
+}
+</script>
+```
+
+### React
+```jsx
+import React, { useState } from 'react';
+
+function AddressSearch() {
+    const [query, setQuery] = useState('');
+    const [results, setResults] = useState([]);
+
+    const handleSearch = async (e) => {
+        const value = e.target.value;
+        setQuery(value);
+        
+        if (value.length < 3) return;
+        
+        const response = await fetch(`/api/location-finder/search?query=${encodeURIComponent(value)}`);
+        const data = await response.json();
+        setResults(data.results);
+    };
+
+    return (
+        <div>
+            <input 
+                value={query}
+                onChange={handleSearch}
+                placeholder="Search address..."
+            />
+            <div>
+                {results.map((result) => (
+                    <div key={result.address} onClick={() => console.log('Selected:', result)}>
+                        <strong>{result.address}</strong><br/>
+                        <small>Lat: {result.lat}, Lng: {result.lng}</small>
+                    </div>
+                ))}
+            </div>
+        </div>
+    );
+}
+```
+
+## 🌍 OpenStreetMap Integration
+
+This package uses OpenStreetMap's Nominatim API:
+- **Free** - No API keys required
+- **Global** - Worldwide address coverage
+- **Accurate** - High-quality geocoding data
+- **No limits** - Reasonable usage is free
+
+## 📊 Response Format
+
+All endpoints return standardized JSON responses:
+
+```json
+{
+    "success": true,
+    "results": [
+        {
+            "address": "Full formatted address",
+            "lat": 41.0082,
+            "lng": 28.9784
+        }
+    ],
+    "count": 1
+}
+```
+
+Error responses:
+```json
+{
+    "success": false,
+    "error": "Error message",
+    "results": [],
+    "count": 0
+}
+```
+
+## 🔧 Advanced Usage
+
+### Custom Service Provider
+
+```php
+// In your AppServiceProvider
+use Sslah\LocationFinder\Services\GeocodingService;
+
+public function boot()
+{
+    $this->app->bind(GeocodingService::class, function ($app) {
+        return new GeocodingService([
+            'country_code' => 'us',
+            'language' => 'en',
+            'max_results' => 5,
+        ]);
+    });
+}
+```
+
+### Direct Service Usage
 
 ```php
 use Sslah\LocationFinder\Services\GeocodingService;
 
-$geocoding = app(GeocodingService::class);
-
-// Search addresses
-$results = $geocoding->search('Istanbul');
-
-// Geocode specific address
-$location = $geocoding->geocode('Taksim, Istanbul');
-
-// Reverse geocode coordinates
-$address = $geocoding->reverseGeocode(41.0082, 28.9784);
-```
-
-### Custom Styling
-
-```css
-/* Customize dropdown */
-.location-finder-dropdown {
-    max-height: 300px;
-    box-shadow: 0 10px 25px rgba(0,0,0,0.1);
-}
-
-/* Customize highlighted item */
-.location-finder-item:hover {
-    background-color: #f3f4f6;
+class MyController extends Controller
+{
+    public function search(Request $request, GeocodingService $geocoding)
+    {
+        $results = $geocoding->search($request->input('query'));
+        
+        return response()->json($results);
+    }
 }
 ```
 
----
+## 🎯 Why This Package?
 
-## 📋 Requirements
+### ✅ **Pure API Service**
+- No frontend dependencies
+- Framework agnostic
+- Use with any CSS framework
+- Implement your own UI
 
-- **PHP**: 8.1 or higher
-- **Laravel**: 10.0 or higher
-- **Alpine.js**: 3.x (included in Laravel)
-- **Tailwind CSS**: 3.x (for styling)
+### ✅ **OpenStreetMap Powered**
+- Free and open source
+- No API keys required
+- Global coverage
+- High accuracy
 
----
+### ✅ **Laravel Integration**
+- Service provider included
+- Configuration file
+- Caching support
+- Error handling
 
-## 🎯 Why OpenStreetMap?
+### ✅ **Developer Friendly**
+- Clean API endpoints
+- Standardized responses
+- Easy to integrate
+- Well documented
 
-- **✅ Free:** No API keys, no rate limits
-- **✅ Accurate:** Community-driven, constantly updated
-- **✅ Global:** Worldwide coverage
-- **✅ Open:** Open source, transparent
-- **✅ Reliable:** Used by major websites
+## 📝 License
 
----
+MIT License
 
-## 🤝 Contributing
+## 🔗 Links
 
-We welcome contributions! Please see [CONTRIBUTING.md](CONTRIBUTING.md) for details.
-
----
-
-## 📄 License
-
-The MIT License (MIT). Please see [License File](LICENSE) for more information.
-
----
-
-## 🏆 Credits
-
-- **Author**: [Sslah](https://github.com/ahmetsuslu)
-- **OpenStreetMap**: For the amazing geocoding service
-- **Alpine.js**: For the reactive frontend framework
-
----
-
-## 📧 Support
-
-For security issues, please email: mail@ahmetsuslu.com
-
-For general questions, please use the [issue tracker](../../issues).
-
----
-
-## 🌟 Star This Package!
-
-If this package helps you build better Laravel applications, please ⭐ **star** it on GitHub!
-
----
-
-**Made with ❤️ for the Laravel community**
+- GitHub: https://github.com/ahmetsuslu/location-finder
+- Packagist: https://packagist.org/packages/sslah/location-finder
+- OpenStreetMap: https://www.openstreetmap.org/
+- Nominatim API: https://nominatim.org/

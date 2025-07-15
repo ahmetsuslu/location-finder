@@ -39,15 +39,10 @@ class LocationFinderServiceProvider extends ServiceProvider
             __DIR__ . '/../config/location-finder.php' => config_path('location-finder.php'),
         ], 'location-finder-config');
 
-        // Publish views
+        // Publish views (optional - for API documentation)
         $this->publishes([
             __DIR__ . '/../resources/views' => resource_path('views/vendor/location-finder'),
         ], 'location-finder-views');
-
-        // Publish assets
-        $this->publishes([
-            __DIR__ . '/../resources/assets' => public_path('vendor/location-finder'),
-        ], 'location-finder-assets');
 
         // Load views
         $this->loadViewsFrom(__DIR__ . '/../resources/views', 'location-finder');
