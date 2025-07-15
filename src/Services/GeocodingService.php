@@ -76,9 +76,11 @@ class GeocodingService
 
         foreach ($response as $item) {
             $formatted = [
-                'address' => $item[$format['address']] ?? '',
+                'display_name' => $item[$format['address']] ?? '',
                 'lat' => (float) ($item[$format['lat']] ?? 0),
-                'lng' => (float) ($item[$format['lng']] ?? 0),
+                'lon' => (float) ($item[$format['lng']] ?? 0),
+                'class' => $item['class'] ?? null,
+                'type' => $item['type'] ?? null,
             ];
 
             if ($this->config['response']['include_raw']) {
@@ -132,9 +134,11 @@ class GeocodingService
 
             $data = $response->json();
             $result = [
-                'address' => $data['display_name'] ?? '',
+                'display_name' => $data['display_name'] ?? '',
                 'lat' => (float) ($data['lat'] ?? 0),
-                'lng' => (float) ($data['lon'] ?? 0),
+                'lon' => (float) ($data['lon'] ?? 0),
+                'class' => $data['class'] ?? null,
+                'type' => $data['type'] ?? null,
             ];
 
             if ($this->config['cache']['enabled']) {
